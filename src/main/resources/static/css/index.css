@@ -1,0 +1,53 @@
+body{
+    margin: 0 auto;
+}
+.box{
+
+    width: 720px;
+    height: 480px;
+    margin: 50px auto;
+    border: 1px solid #cccccc;
+}
+
+.box h1{
+
+    color: #008040;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.searchbox{
+    width: 80%;
+    height: 30px;
+    margin: 60px auto;
+    border: 1px solid #008040;
+}
+
+
+.searchbox input[type="text"]{
+    height: 30px;
+    width: 85%;
+    margin: 0;
+    outline: none;
+    border: 0;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+
+
+.searchbox input[type="submit"]{
+
+    height: 30px;
+    width: 14%;
+    outline: none;
+    border: 0px;
+    margin: 0;
+    padding: 0;
+    background-color: #008040;
+    vertical-align: middle;
+    color: #ffffff;
+    float: right;
+
+
+}

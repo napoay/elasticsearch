@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="css/result.css">
+</head>
+<body>
+
+<div class="result_search">
+    <div class="logo">
+        <h2>
+            <a href="index.jsp">新闻搜索</a>
+        </h2>
+    </div>
+    <div class="searchbox">
+        <form class="resultform" action="/Searchnews" method="post">
+            <input type="text" name="query"
+                   value="<%=queryback %>">
+            <input type="submit" value="搜索">
+        </form>
+    </div>
+</div>
+
+
+<div class="newsist">
+
+    <tr  th:each="file,fileStat : ${flist}">
+    <div class="news">
+        <h4>
+            <th th:utext="${file.title}">状态变量：index</th>
+        </h4>
+        <p>
+        <th th:utext="${file.filecontent}">状态变量：index</th>
+
+        </p>
+    </div>
+
+    </tr>
+</div>
+
+
+<table border="1">
+    <tr>
+        <th>用户名</th>
+        <th>邮箱</th>
+        <th>管理员</th>
+        <th>状态变量：index</th>
+        <th>状态变量：count</th>
+        <th>状态变量：size</th>
+        <th>状态变量：current.userName</th>
+        <th>状态变量：even</th>
+        <th>状态变量：odd</th>
+        <th>状态变量：first</th>
+        <th>状态变量：last</th>
+    </tr>
+    <tr  th:each="user,userStat : ${flist}">
+
+        <th th:text="${user.title}">状态变量：index</th>
+        <th th:text="${user.filecontent}">状态变量：index</th>
+        <th th:text="${userStat.index}">状态变量：index</th>
+        <th th:text="${userStat.count}">状态变量：count</th>
+        <th th:text="${userStat.size}">状态变量：size</th>
+        <th th:text="${userStat.even}">状态变量：even****</th>
+        <th th:text="${userStat.odd}">状态变量：odd</th>
+        <th th:text="${userStat.first}">状态变量：first</th>
+        <th th:text="${userStat.last}">状态变量：last</th>
+    </tr>
+</table>
+
+</body>
+</html>

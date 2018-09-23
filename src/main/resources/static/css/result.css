@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.result_search {
+    width: 100%;
+    height: 60px;
+    padding-left: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #f0f0f0;
+}
+
+.logo {
+    float: left;
+    width: 100px;
+}
+
+.logo a:link, .logo a:visited {
+    text-decoration: none;
+    color: #008040;
+}
+
+.searchbox {
+    width: 500px;
+    float: left;
+    margin-top: 20px;
+    margin-left: 30px;
+    border: 1px solid #008040;
+    height: 30px;
+    background-color: #ffffff;
+    float: left;
+}
+
+.resultform input[type=text] {
+    height: 24px;
+    outline: none;
+    width: 80%;
+    border: 0;
+    line-height: 20px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.resultform input[type=submit] {
+    width: 15%;
+    line-height: 30px;
+    background-color: #008040;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    color: #ffffff;
+    float: right;
+}
+
+.result_info {
+    padding-left: 50px;
+}
+
+.result_info span {
+    color: #ff0000;
+}
+
+.newsist {
+    width: 700px;
+    margin-top: 10px;
+    margin-left: 30px;
+    height: auto;
+    min-height: 500px;
+    position: relative;
+}
+
+.news {
+    margin-top: 15px;
+}
+
+.news h4 {
+    padding-left: 20px;
+    color: #1c00ce;
+    margin: 0;
+}
+
+.news h4 a:link, .news h3 a:visited {
+    text-decoration: none;
+    color: #1c00ce;
+}
+
+.news h4 a:hover {
+    text-decoration: underline;
+}
+
+.news p {
+    margin: 10px;
+    line-height: 1.5;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+#page {
+    width: 90%;
+    height: 40px;
+    margin: 0 auto;
+}
+
+ul {
+    list-style: none;
+    height: 30px;
+}
+
+ul li {
+    float: left;
+    width: 50px;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+
+ul li a:link, ul li a:visited {
+    text-decoration: none;
+    display: block;
+    line-height: 18px;
+    color: #004080;
+}
+
+.info{
+    width:800px;
+}
+
+.info p{
+    text-align: center;
+    font-size: 13px;
+    color:#58595b;
+}
