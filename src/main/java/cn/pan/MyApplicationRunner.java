@@ -31,6 +31,10 @@ public class MyApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments var1) throws Exception {
 
+        //删除userdoc索引
+
+        restService.deleteIndex("userdoc");
+
         //设置mapping
         XContentBuilder builder = null;
         try {
@@ -57,6 +61,7 @@ public class MyApplicationRunner implements ApplicationRunner {
             }
             builder.endObject();
 
+            //初始化索引
             Boolean isSuccess = restService.initIndex("userdoc",
                     "file", 3, 0, builder);
 
@@ -82,10 +87,9 @@ public class MyApplicationRunner implements ApplicationRunner {
                 }
                 restService.indexDoc("userdoc", "file", fileList);
 
-            }else{
+            } else {
                 System.out.println("索引初始化失败.");
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();

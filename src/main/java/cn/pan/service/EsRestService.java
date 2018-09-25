@@ -3,6 +3,9 @@ package cn.pan.service;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -13,13 +16,11 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.text.Text;
-import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -107,6 +108,49 @@ public class EsRestService {
 
 
     /**
+     * 判断索引是否存在
+     *
+     * @param indexName
+     * @return
+     */
+    public boolean existIndex(String indexName) {
+        GetIndexRequest request = new GetIndexRequest();
+        request.indices(indexName);
+        try {
+            boolean exists = getRestClient().indices().exists(request);
+            return exists;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 删除索引
+     *
+     * @param indexName
+     * @return
+     */
+    public boolean deleteIndex(String indexName) {
+
+        try {
+            if (existIndex(indexName)) {
+                DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
+                DeleteIndexResponse deleteIndexResponse = getRestClient().indices().delete(deleteIndexRequest);
+                return deleteIndexResponse.isAcknowledged();
+            } else {
+                System.out.println("索引不存在");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * 批量索引文档
+     *
      * @param indexName
      * @param typeName
      * @param docList
@@ -115,8 +159,7 @@ public class EsRestService {
 
     public boolean indexDoc(String indexName,
                             String typeName,
-                            List docList
-    ) {
+                            List docList) {
         RestHighLevelClient client = getRestClient();
         BulkRequest bulkRequest = new BulkRequest();
 
@@ -133,7 +176,6 @@ public class EsRestService {
             BulkResponse bulkResponse = client.bulk(bulkRequest);
             if (bulkResponse.hasFailures()) {
                 System.out.println("批量索引失败");
-
                 return false;
             }
         } catch (IOException e) {
@@ -143,6 +185,16 @@ public class EsRestService {
     }
 
 
+    /**
+     * 搜索文档
+     *
+     * @param indics
+     * @param keyword
+     * @param fieldNames
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     public ArrayList<Map<String, Object>> searchDocs(String indics,
                                                      String keyword,
                                                      String[] fieldNames,
@@ -170,7 +222,7 @@ public class EsRestService {
                 .postTags("</span>");
         searchSourceBuilder.highlighter(highlightBuilder);
         searchSourceBuilder.query(multiMatchQuery);
-        searchSourceBuilder.from((pageNum-1)*pageSize);
+        searchSourceBuilder.from((pageNum - 1) * pageSize);
         searchSourceBuilder.size(pageSize);
         searchRequest.source(searchSourceBuilder);
         ArrayList<Map<String, Object>> resultList = new ArrayList<>();
