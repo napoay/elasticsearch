@@ -1,0 +1,5 @@
+构造一个线程池为什么需要几个参数？如果避免线程池出现OOM？Runnable和Callable的区别是什么？本文将对这些问题一一解答，同时还将给出使用线程池的常见场景和代码片段。
+
+基础知识
+Executors创建线程池
+Java中创建线程池很简单，只需要调用Executors中相应的便捷方法即可，比如Executors.newFixedThreadPool(int nThreads)，但是便捷不仅隐藏了复杂性，也为我们埋下了潜在的隐患（OOM，线程耗尽）。

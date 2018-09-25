@@ -166,15 +166,13 @@ public class EsRestService {
         highlightBuilder.field(highlightFilecontent);
 
         highlightBuilder
-                .preTags("<span style=\\\"color:red\\\">")
+                .preTags("<span style=color:red>")
                 .postTags("</span>");
         searchSourceBuilder.highlighter(highlightBuilder);
         searchSourceBuilder.query(multiMatchQuery);
         searchSourceBuilder.from((pageNum-1)*pageSize);
         searchSourceBuilder.size(pageSize);
         searchRequest.source(searchSourceBuilder);
-
-
         ArrayList<Map<String, Object>> resultList = new ArrayList<>();
 
 

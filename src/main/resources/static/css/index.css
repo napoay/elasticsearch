@@ -25,19 +25,18 @@ body{
 
 
 .searchbox input[type="text"]{
-    height: 30px;
+    height: 20px;
     width: 85%;
     margin: 0;
     outline: none;
     border: 0;
-    line-height: 30px;
+    line-height: 24px;
     font-size: 18px;
 }
 
 
 
 .searchbox input[type="submit"]{
-
     height: 30px;
     width: 14%;
     outline: none;
@@ -48,6 +47,4 @@ body{
     vertical-align: middle;
     color: #ffffff;
     float: right;
-
-
 }
