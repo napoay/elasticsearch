@@ -31,7 +31,7 @@ Elasticsearch 实现文件检索。
 
    访问http://localhost:8080/，看到首页:
 
-   ![](/Users/pan/github/esfilesearch/imgs/1.png)
+   ![](imgs/1.png)
     搜索(src/main/resources/files目录下文件名和内容含有的关键词做测试):
 
-    ![](/Users/pan/github/esfilesearch/imgs/2.png)
+    ![](imgs/2.png)
