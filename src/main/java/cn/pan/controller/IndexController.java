@@ -22,7 +22,6 @@ public class IndexController {
         return "index";
     }
 
-
     @RequestMapping("/search")
     public String search(Model model, @RequestParam("keyword") String keyword) {
         String[] searchFields = {"title", "filecontent"};
@@ -30,7 +29,7 @@ public class IndexController {
                 keyword,
                 searchFields, 1, 10);
         model.addAttribute("flist", fileList);
-        model.addAttribute("keyword",keyword);
+        model.addAttribute("keyword", keyword);
 
         return "result";
     }

@@ -93,8 +93,8 @@ public class EsRestService {
     public boolean indexDoc(String indexName,
                             String typeName,
                             String id,
-                            String jsonString
-    ) {
+                            String jsonString) {
+
         RestHighLevelClient client = getRestClient();
         IndexRequest indexRequest = new IndexRequest(indexName, typeName, id)
                 .source(jsonString, XContentType.JSON);
@@ -132,7 +132,6 @@ public class EsRestService {
      * @return
      */
     public boolean deleteIndex(String indexName) {
-
         try {
             if (existIndex(indexName)) {
                 DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
@@ -162,10 +161,7 @@ public class EsRestService {
                             List docList) {
         RestHighLevelClient client = getRestClient();
         BulkRequest bulkRequest = new BulkRequest();
-
-
         Iterator<String> iter = docList.iterator();
-
         while (iter.hasNext()) {
             String jsonString = iter.next();
             IndexRequest indexRequest = new IndexRequest(indexName, typeName)
@@ -207,13 +203,10 @@ public class EsRestService {
         MultiMatchQueryBuilder multiMatchQuery = QueryBuilders
                 .multiMatchQuery(keyword, fieldNames)
                 .operator(Operator.AND);
-
         HighlightBuilder highlightBuilder = new HighlightBuilder();
-
         HighlightBuilder.Field highlightTitle =
                 new HighlightBuilder.Field("title");
         highlightBuilder.field(highlightTitle);
-
         HighlightBuilder.Field highlightFilecontent = new HighlightBuilder.Field("filecontent");
         highlightBuilder.field(highlightFilecontent);
 
@@ -226,7 +219,6 @@ public class EsRestService {
         searchSourceBuilder.size(pageSize);
         searchRequest.source(searchSourceBuilder);
         ArrayList<Map<String, Object>> resultList = new ArrayList<>();
-
 
         try {
             SearchResponse searchResponse = getRestClient()
