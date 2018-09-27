@@ -232,7 +232,6 @@ public class EsRestService {
             SearchResponse searchResponse = getRestClient()
                     .search(searchRequest);
             SearchHits hits = searchResponse.getHits();
-            System.out.println("共搜索到: " + hits.totalHits);
             SearchHit[] searchHits = hits.getHits();
             for (SearchHit hit : searchHits) {
 

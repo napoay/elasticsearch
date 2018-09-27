@@ -19,18 +19,18 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index() {
-
         return "index";
     }
 
 
     @RequestMapping("/search")
     public String search(Model model, @RequestParam("keyword") String keyword) {
-        String[] searchields = {"title", "filecontent"};
+        String[] searchFields = {"title", "filecontent"};
         ArrayList<Map<String, Object>> fileList = restService.searchDocs("userdoc",
                 keyword,
-                searchields, 1, 10);
+                searchFields, 1, 10);
         model.addAttribute("flist", fileList);
+        model.addAttribute("keyword",keyword);
 
         return "result";
     }
