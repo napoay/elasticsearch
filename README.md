@@ -1,6 +1,8 @@
 # 简介
 
-Elasticsearch 实现文件检索。
+Elasticsearch 在开源搜索引擎中基本处于垄断地位,也成为Java程序员的必备技能之一。
+这个项目的目的是为了让Elasticsearch学习者轻松、愉快的掌握核心知识点。
+
 
 # 搜索客户端
 
@@ -24,6 +26,8 @@ elasticsearch-rest-high-level-client
    elastic.search.port=9200
    elastic.search.clusterName=elasticsearch
    ```
+
+如果ES的ip、端口和集群名称和你的不一样需要手动修改。
 
 3. 启动
    运行`src/main/java/cn/pan/EsfilesearchApplication.java`中的main方法.
