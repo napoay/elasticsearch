@@ -25,7 +25,7 @@ body{
 
 
 .searchbox input[type="text"]{
-    height: 20px;
+    height: 28px;
     width: 85%;
     margin: 0;
     outline: none;
@@ -34,7 +34,11 @@ body{
     font-size: 18px;
 }
 
-
+input:-webkit-autofill {
+    background-color: #FFFFFF;
+    background-image: none;
+    color: #000;
+}
 
 .searchbox input[type="submit"]{
     height: 30px;
