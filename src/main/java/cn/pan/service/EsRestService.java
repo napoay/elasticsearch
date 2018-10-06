@@ -1,6 +1,7 @@
 package cn.pan.service;
 
 import org.apache.http.HttpHost;
+import org.apache.log4j.Logger;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -36,6 +37,8 @@ import java.util.Map;
 
 @Service
 public class EsRestService {
+
+    private static Logger logger = Logger.getLogger(EsRestService.class.getClass());
 
     public RestHighLevelClient getRestClient() {
 
@@ -138,7 +141,7 @@ public class EsRestService {
                 DeleteIndexResponse deleteIndexResponse = getRestClient().indices().delete(deleteIndexRequest);
                 return deleteIndexResponse.isAcknowledged();
             } else {
-                System.out.println("索引不存在");
+                logger.info("索引不存在");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -171,7 +174,7 @@ public class EsRestService {
         try {
             BulkResponse bulkResponse = client.bulk(bulkRequest);
             if (bulkResponse.hasFailures()) {
-                System.out.println("批量索引失败");
+                logger.error("批量索引失败");
                 return false;
             }
         } catch (IOException e) {

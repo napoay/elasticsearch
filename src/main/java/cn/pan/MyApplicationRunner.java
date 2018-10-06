@@ -4,6 +4,7 @@ import cn.pan.model.UserDoc;
 import cn.pan.service.EsRestService;
 import cn.pan.service.TikaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 @Component
 public class MyApplicationRunner implements ApplicationRunner {
+    private static Logger logger = Logger.getLogger(MyApplicationRunner.class.getClass());
 
 
     @Autowired
@@ -66,8 +68,8 @@ public class MyApplicationRunner implements ApplicationRunner {
                     "file", 3, 0, builder);
 
             if (isSuccess) {
-                System.out.println("索引初始化成功.索引名: userdoc,类型名: file,分片数: 3,副本数: 0");
 
+                logger.info("索引初始化成功.索引名: userdoc,类型名: file,分片数: 3,副本数: 0");
                 /**
                  * 批量导数据
                  */
@@ -75,7 +77,6 @@ public class MyApplicationRunner implements ApplicationRunner {
                 ObjectMapper objMapper = new ObjectMapper();
 
                 File fileDir = resource.getFile();
-                System.out.println(fileDir.isDirectory());
                 ArrayList<String> fileList = new ArrayList<>();
                 if (fileDir.exists() && fileDir.isDirectory()) {
                     File[] allFiles = fileDir.listFiles();
@@ -88,7 +89,8 @@ public class MyApplicationRunner implements ApplicationRunner {
                 restService.indexDoc("userdoc", "file", fileList);
 
             } else {
-                System.out.println("索引初始化失败.");
+                logger.error("索引初始化失败.");
+
             }
 
         } catch (IOException e) {

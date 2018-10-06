@@ -25,15 +25,15 @@
 
 <div class="newsist">
 
-    <tr  th:each="file,fileStat : ${flist}">
-    <div class="news">
-        <h4>
-            <div th:utext="${file.title}">文件标题</div>
-        </h4>
-        <p>
-        <th th:utext="${file.filecontent}">文件内容</th>
-        </p>
-    </div>
+    <tr th:each="file,fileStat : ${flist}">
+        <div class="news">
+            <h4>
+                <div th:utext="${file.title}">文件标题</div>
+            </h4>
+            <p>
+            <th th:utext="${file.filecontent}">文件内容</th>
+            </p>
+        </div>
 
     </tr>
 </div>

@@ -23,7 +23,8 @@ public class IndexController {
     }
 
     @RequestMapping("/search")
-    public String search(Model model, @RequestParam("keyword") String keyword) {
+    public String search(Model model,
+                         @RequestParam("keyword") String keyword) {
         String[] searchFields = {"title", "filecontent"};
         ArrayList<Map<String, Object>> fileList = restService.searchDocs("userdoc",
                 keyword,
