@@ -14,7 +14,7 @@ elasticsearch-rest-high-level-client
 | 名称          | 版本  |
 | ------------- | ----- |
 | Spring boot   | 2.0.5 |
-| Elasticsearch | 6.3.2 |
+| Elasticsearch | 7.2.0 |
 
 # 运行方法
 
