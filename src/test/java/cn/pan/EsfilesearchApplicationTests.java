@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -131,7 +132,7 @@ public class EsfilesearchApplicationTests {
                 .source(jsonString, XContentType.JSON);
 
         try {
-            IndexResponse indexrespone = client.index(indexRequest);
+            IndexResponse indexrespone = client.index(indexRequest, RequestOptions.DEFAULT);
 
             System.out.println(indexrespone.status());
         } catch (IOException e) {
