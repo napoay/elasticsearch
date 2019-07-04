@@ -27,8 +27,7 @@ public class IndexController {
                          @RequestParam("keyword") String keyword) {
         String[] searchFields = {"title", "filecontent"};
         ArrayList<Map<String, Object>> fileList = restService.searchDocs("userdoc",
-                keyword,
-                searchFields, 1, 10);
+                keyword, searchFields, 1, 10);
         model.addAttribute("flist", fileList);
         model.addAttribute("keyword", keyword);
 
