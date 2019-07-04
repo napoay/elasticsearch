@@ -1,11 +1,11 @@
 package cn.pan.service;
 
+import cn.pan.congiguration.EsConfiguration;
 import org.apache.http.HttpHost;
 import org.apache.log4j.Logger;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -13,6 +13,8 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
@@ -27,6 +29,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -38,13 +41,18 @@ import java.util.Map;
 @Service
 public class EsRestService {
 
+    @Autowired
+    EsConfiguration esConfiguration;
+
+
     private static Logger logger = Logger.getLogger(EsRestService.class.getClass());
+
 
     public RestHighLevelClient getRestClient() {
 
         RestHighLevelClient client = new RestHighLevelClient(
                 RestClient.builder(
-                        new HttpHost("localhost", 9200, "http")));
+                        new HttpHost(esConfiguration.getHost(), esConfiguration.getPort(), esConfiguration.getSchema())));
 
         return client;
     }
@@ -78,7 +86,7 @@ public class EsRestService {
         request.mapping(typeName, builder);
         CreateIndexResponse createIndexResponse = null;
         try {
-            createIndexResponse = client.indices().create(request);
+            createIndexResponse = client.indices().create(request, RequestOptions.DEFAULT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,7 +110,7 @@ public class EsRestService {
         IndexRequest indexRequest = new IndexRequest(indexName, typeName, id)
                 .source(jsonString, XContentType.JSON);
         try {
-            IndexResponse indexResponse = client.index(indexRequest);
+            IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +128,7 @@ public class EsRestService {
         GetIndexRequest request = new GetIndexRequest();
         request.indices(indexName);
         try {
-            boolean exists = getRestClient().indices().exists(request);
+            boolean exists = getRestClient().indices().exists(request, RequestOptions.DEFAULT);
             return exists;
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,8 +146,8 @@ public class EsRestService {
         try {
             if (existIndex(indexName)) {
                 DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
-                DeleteIndexResponse deleteIndexResponse = getRestClient().indices().delete(deleteIndexRequest);
-                return deleteIndexResponse.isAcknowledged();
+                AcknowledgedResponse acknowledgedResponse = getRestClient().indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
+                return acknowledgedResponse.isAcknowledged();
             } else {
                 logger.info("索引不存在");
             }
@@ -172,7 +180,7 @@ public class EsRestService {
             bulkRequest.add(indexRequest);
         }
         try {
-            BulkResponse bulkResponse = client.bulk(bulkRequest);
+            BulkResponse bulkResponse = client.bulk(bulkRequest, RequestOptions.DEFAULT);
             if (bulkResponse.hasFailures()) {
                 logger.error("批量索引失败");
                 return false;
@@ -225,7 +233,7 @@ public class EsRestService {
 
         try {
             SearchResponse searchResponse = getRestClient()
-                    .search(searchRequest);
+                    .search(searchRequest, RequestOptions.DEFAULT);
             SearchHits hits = searchResponse.getHits();
             SearchHit[] searchHits = hits.getHits();
             for (SearchHit hit : searchHits) {
