@@ -1,15 +1,20 @@
 package cn.pan;
 
+import cn.pan.dao.NewsJDBC;
+import cn.pan.model.NewsDoc;
 import cn.pan.model.UserDoc;
 import cn.pan.service.EsRestService;
 import cn.pan.service.TikaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.catalina.User;
 import org.apache.log4j.Logger;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -78,14 +83,27 @@ public class MyApplicationRunner implements ApplicationRunner {
 
                 File fileDir = resource.getFile();
                 ArrayList<String> fileList = new ArrayList<>();
-                if (fileDir.exists() && fileDir.isDirectory()) {
-                    File[] allFiles = fileDir.listFiles();
-                    for (File f : allFiles) {
-                        UserDoc userDoc = tikaService.parserExtraction(f);
-                        String json = objMapper.writeValueAsString(userDoc);
-                        fileList.add(json);
-                    }
+//                if (fileDir.exists() && fileDir.isDirectory()) {
+//                    File[] allFiles = fileDir.listFiles();
+//                    for (File f : allFiles) {
+//                        UserDoc userDoc = tikaService.parserExtraction(f);
+//                        System.out.println(userDoc.toString());
+//                        String json = objMapper.writeValueAsString(userDoc);
+//                        fileList.add(json);
+//                    }
+//                }
+                ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+                NewsJDBC newsJDBC = (NewsJDBC) context.getBean("newsJDBC");
+
+                for (int id = 5914747; id <= 5914747; id++) {
+                    NewsDoc newsDoc = newsJDBC.getNewsDoc(id);
+                    UserDoc userDoc = new UserDoc();
+                    userDoc.setTitle(newsDoc.getNews_title());
+                    userDoc.setFilecontent(newsDoc.getNews_fulltext());
+                    String json = objMapper.writeValueAsString(userDoc);
+                    fileList.add(json);
                 }
+
                 restService.indexDoc("userdoc", "file", fileList);
 
             } else {
