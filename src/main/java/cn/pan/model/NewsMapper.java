@@ -15,4 +15,5 @@ public class NewsMapper implements RowMapper<NewsDoc> {
         news.setNews_fulltext(resultSet.getString("news_fulltext"));
         return news;
     }
+
 }

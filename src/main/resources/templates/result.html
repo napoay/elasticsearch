@@ -10,14 +10,14 @@
 <div class="result_search">
     <div class="logo">
         <h2>
-            <a href="/">文件搜索</a>
+            <a href="/">File Search</a>
         </h2>
     </div>
     <div class="searchbox">
         <form class="resultform" action="/search" method="post">
             <input type="text" name="keyword"
                    th:value="${keyword}">
-            <input type="submit" value="搜索">
+            <input type="submit" value="Search">
         </form>
     </div>
 </div>
@@ -28,10 +28,10 @@
     <tr th:each="file,fileStat : ${flist}">
         <div class="news">
             <h4>
-                <div th:utext="${file.title}">文件标题</div>
+                <div th:utext="${file.title}">File Title</div>
             </h4>
             <p>
-            <th th:utext="${file.filecontent}">文件内容</th>
+            <th th:utext="${file.filecontent}">File Fulltext</th>
             </p>
         </div>
 

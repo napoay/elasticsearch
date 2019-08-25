@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class UserDoc {
     private String title;
+    private String news_type;
     private String filecontent;
 
     public void setTitle(String title) {
@@ -19,6 +20,10 @@ public class UserDoc {
 
     public void setFilecontent(String filecontent) {
         this.filecontent = filecontent;
+    }
+
+    public void setType(String type){
+        this.news_type = type;
     }
 
     @Override

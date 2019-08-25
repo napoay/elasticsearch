@@ -2,7 +2,6 @@ body{
     margin: 0 auto;
 }
 .box{
-
     width: 720px;
     height: 480px;
     margin: 50px auto;
@@ -10,7 +9,6 @@ body{
 }
 
 .box h1{
-
     color: #008040;
     text-align: center;
     margin-top: 50px;
