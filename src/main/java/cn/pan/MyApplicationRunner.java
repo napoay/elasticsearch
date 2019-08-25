@@ -5,10 +5,7 @@ import cn.pan.dao.NewsJDBC;
 import cn.pan.model.NewsDoc;
 import cn.pan.model.UserDoc;
 import cn.pan.service.EsRestService;
-import cn.pan.service.TikaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.catalina.User;
-import org.apache.cxf.transport.http.auth.HttpAuthHeader;
 import org.apache.log4j.Logger;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
@@ -29,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 @Component
 public class MyApplicationRunner implements ApplicationRunner {
